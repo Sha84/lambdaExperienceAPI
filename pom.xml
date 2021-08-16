@@ -62,12 +62,6 @@
 			<type>zip</type>
 		</dependency>
 		<dependency>
-			<groupId>600a1e2b-9eca-403f-b97d-1178aa13d11a</groupId>
-			<artifactId>mule-plugin-dch-sitecore</artifactId>
-			<version>1.0.2</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
 			<groupId>org.mule.connectors</groupId>
 			<artifactId>mule-sockets-connector</artifactId>
 			<version>1.1.5</version>
@@ -80,12 +74,6 @@
 			<classifier>mule-plugin</classifier>
 		</dependency>
 		<dependency>
-			<groupId>600a1e2b-9eca-403f-b97d-1178aa13d11a</groupId>
-			<artifactId>mule-plugin-update-url-papi</artifactId>
-			<version>1.0.2</version>
-			<classifier>mule-plugin</classifier>
-		</dependency>
-		<dependency>
 			<groupId>org.mule.connectors</groupId>
 			<artifactId>mule-jms-connector</artifactId>
 			<version>1.7.5</version>
@@ -95,6 +83,25 @@
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-all</artifactId>
 			<version>5.16.2</version>
+		</dependency>
+		<dependency>
+			<groupId>694704ae-436b-41ec-be10-7e4873bd5821</groupId>
+			<artifactId>dch-lamda-eapi</artifactId>
+			<version>1.0.0</version>
+			<classifier>raml</classifier>
+			<type>zip</type>
+		</dependency>
+		<dependency>
+			<groupId>694704ae-436b-41ec-be10-7e4873bd5821</groupId>
+			<artifactId>mule-plugin-update-url-papi</artifactId>
+			<version>1.0.0</version>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
+			<groupId>694704ae-436b-41ec-be10-7e4873bd5821</groupId>
+			<artifactId>mule-plugin-dch-sitecore</artifactId>
+			<version>1.0.0</version>
+			<classifier>mule-plugin</classifier>
 		</dependency>
 	</dependencies>
 
