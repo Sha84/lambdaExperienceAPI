@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:jms="http://www.mulesoft.org/schema/mule/jms"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd">
+	<jms:config name="JMS_Config" doc:name="JMS Config" doc:id="d58419ce-c719-4b6d-8cd4-d1c9d4970f9e" >
+		<jms:active-mq-connection username="admin" password="admin" >
+			<jms:factory-configuration brokerUrl="tcp://localhost:61616" />
+		</jms:active-mq-connection>
+	</jms:config>
+	<http:listener-config name="dch-lamda-eapi-2-httpListenerConfig" doc:name="HTTP Listener config" doc:id="2ffe5628-7c4f-452c-8086-dc0aab3e03a2" >
+		<http:listener-connection host="${http.host}" port="${http.port}" />
+	</http:listener-config>
+	<apikit:config outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" doc:name="Router" doc:id="c1f5c2d6-62ff-433e-b4fc-b3ad6b8b37c1" name="dch-lamda-eapi-2-config" api="resource::694704ae-436b-41ec-be10-7e4873bd5821:dch-lamda-eapi:1.0.0:raml:zip:dch-lamda-eapi.raml"/>
+	<global-property doc:name="Global Property" doc:id="71859aca-9347-4188-a2a0-f3e973cefb26" name="env" value="dev" />
+	<configuration-properties doc:name="Configuration properties" doc:id="ee9c41c1-5a87-468f-995b-4f7b8bd5caee" file="properties/${env}.yaml" />
+</mule>

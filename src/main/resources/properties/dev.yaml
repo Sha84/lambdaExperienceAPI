@@ -1,0 +1,26 @@
+#Listener configurations
+"http":
+   "name": "dch-lamda-eapi-2-httpListenerConfig"
+   "host": "0.0.0.0"
+   "port": "8083"
+   "path": "/api/*"
+   "config": "dch-lamda-eapi-2-httpListenerConfig"
+   "timeout": "30000"
+#Api details
+"application":
+  "name":  "lambda-eapi"
+  "version"     : "1"
+  "instanceName": "lambda-eapi"
+  "environment": "dev"
+  "status": "running"
+
+#JMS config
+"jms": 
+    "config": "JMS_Config"
+    "destination": "sitecore"
+    "url": "tcp://localhost:61616" 
+
+
+         
+              
+                            

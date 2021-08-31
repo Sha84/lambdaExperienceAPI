@@ -7,29 +7,31 @@ http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/cu
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
 http://www.mulesoft.org/schema/mule/update-url-papi http://www.mulesoft.org/schema/mule/update-url-papi/current/mule-update-url-papi.xsd
 http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd">
-	<vm:config name="VM_Config" doc:name="VM Config" doc:id="8d1691be-cf83-47c5-95be-1bb6f6193e68" >
-		<vm:queues >
-			<vm:queue queueName="lambdaQue" queueType="PERSISTENT" />
-		</vm:queues>
-	</vm:config>
-	<update-url-papi:config name="Update_url_papi_Config" doc:name="Update-url-papi Config" doc:id="b782a960-77a9-442e-97aa-e49c1516ef0f" property_host="localhost" property_port="8085" property_protocol="HTTP" property_username="shani" property_password="shani" property_basePath="/api/" property_responseTimeout="300000"/>
-	<jms:config name="JMS_Config" doc:name="JMS Config" doc:id="59c8f8e8-5702-4f08-92d4-a0868218ce8b" >
-		<jms:active-mq-connection username="admin" password="admin" >
-			<jms:factory-configuration brokerUrl="tcp://localhost:61616" />
-		</jms:active-mq-connection>
-	</jms:config>
 	<flow name="lambda-eapi-implementationFlow" doc:id="8a722c25-0060-49f2-9df7-a46a8597a270" >
-		<logger level="INFO" doc:name="Logger" doc:id="a4a35bb4-09c3-40c4-a331-0643fca948a5" message="#[payload]"/>
-		<jms:publish doc:name="Publish" doc:id="fcb6cee2-7b4b-4d13-9fd1-26c30b6ba716" config-ref="JMS_Config" destination="Q.SC.LAMBDA"/>
-		<ee:transform doc:name="Transform Message" doc:id="06d0f5e9-b106-4ac7-8231-1612f246cacf" >
+		<logger level="INFO" doc:name="Start Logger" doc:id="a4a35bb4-09c3-40c4-a331-0643fca948a5" message="#[payload]"/>
+		<jms:publish doc:name="Publish" doc:id="fcb6cee2-7b4b-4d13-9fd1-26c30b6ba716" destination="${jms.destination}" config-ref="JMS_Config"/>
+		<ee:transform doc:name="Publish To Que" doc:id="06d0f5e9-b106-4ac7-8231-1612f246cacf" >
 			<ee:message >
-				<ee:set-payload ><![CDATA[%dw 2.0
-output application/json
+				<ee:set-payload ><![CDATA[output application/json
 ---
 {
 	"message": "Published to Que"
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="ebbcc537-2813-4383-b801-e44415d36a69" type="JMS:DESTINATION_NOT_FOUND">
+				<ee:transform doc:name="Error Message" doc:id="eeffa1e1-2159-4edd-98d2-d4f6a0f2bb28" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message" : error.description
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</on-error-propagate>
+		</error-handler>
 	</flow>
 </mule>
